@@ -9713,30 +9713,33 @@ function update() {\n\
 //@ sourceURL=jsont-demo/index.js"
 ));
 require.register("jsont-demo/template.js", Function("exports, require, module",
-"module.exports = '<div>\\n\
-  <div class=\"input\">\\n\
+"module.exports = '<div class=\"top\">\\n\
+  <div class=\"panel\">\\n\
     <h2>Template</h2>\\n\
     <textarea id=\"input\" value=\"{{input}}\" spellcheck=\"false\" autocorrect=\"off\" autocapitalize=\"off\"></textarea>\\n\
   </div>\\n\
-  <div class=\"input\">\\n\
+  <div class=\"panel\">\\n\
     <h2>Options</h2>\\n\
     <textarea id=\"data\" value=\"{{data}}\" spellcheck=\"false\" autocorrect=\"off\" autocapitalize=\"off\"></textarea>\\n\
   </div>\\n\
-  <div class=\"input\">\\n\
+  <div class=\"panel\">\\n\
     <h2>Helpers</h2>\\n\
     <textarea id=\"helpers\" value=\"{{helpers}}\" spellcheck=\"false\" autocorrect=\"off\" autocapitalize=\"off\"></textarea>\\n\
   </div>\\n\
 </div>\\n\
-<div>\\n\
-  <h2>Output</h2>\\n\
-  <pre class=\"out\">{{out}}</pre>\\n\
+<div class=\"bottom\">\\n\
+  <div class=\"panel\">\\n\
+    <h2>Output</h2>\\n\
+    <pre class=\"out\">{{out}}</pre>\\n\
+  </div>\\n\
+  {{#error}}\\n\
+  <div class=\"panel\">\\n\
+    <h2>Error</h2>\\n\
+    <pre class=\"error\">{{error}}</pre>\\n\
+  </div>\\n\
+  {{/error}}\\n\
 </div>\\n\
-{{#error}}\\n\
-<div>\\n\
-  <h2>Error</h2>\\n\
-  <pre class=\"error\">{{error}}</pre>\\n\
-</div>\\n\
-{{/error}}';//@ sourceURL=jsont-demo/template.js"
+';//@ sourceURL=jsont-demo/template.js"
 ));
 require.register("jsont-demo/default-helpers.js", Function("exports, require, module",
 "module.exports = function (jsont) {\n\

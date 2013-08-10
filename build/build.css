@@ -3,11 +3,12 @@ body {
   position: relative;
 }
 
-.input {
+.panel {
   position: relative;
+  vertical-align: top;
 }
 
-.input textarea {
+.panel textarea {
   height: 350px;
   width: 100%;
   font-family: monospace;
@@ -21,17 +22,17 @@ body {
 }
 
 @media (min-width: 820px) {
-  .input {
+  .panel {
     width: 33%;
     display: inline-block;
   }
 
-  .input textarea {
-    font-size: 1.2em;
+  .panel textarea {
+    font-size: 1.1em;
   }
 
   .error,
   .out {
-    font-size: 1.2em;
+    font-size: 1.1em;
   }
 }
