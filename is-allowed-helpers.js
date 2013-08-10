@@ -10,7 +10,7 @@ module.exports = function (jsont) {
   };
 
   jsont.use('is-allowed-to', function(input, perm, cb) {
-    if (perm === 'code') return cb(null, input);
+    if (perm === 'code' && input === 'CamShaft') return cb(null, input);
     cb(null, undefined);
   });
 

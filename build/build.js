@@ -10857,7 +10857,7 @@ require.register("jsont-demo/is-allowed-helpers.js", Function("exports, require,
   };\n\
 \n\
   jsont.use('is-allowed-to', function(input, perm, cb) {\n\
-    if (perm === 'code') return cb(null, input);\n\
+    if (perm === 'code' && input === 'CamShaft') return cb(null, input);\n\
     cb(null, undefined);\n\
   });\n\
 \n\
