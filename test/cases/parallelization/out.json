@@ -1,0 +1,16 @@
+{
+  "id": "1",
+  "likes": 4,
+  "followers": [
+    {
+      "id": "2",
+      "name": "Scott",
+      "likes": 3
+    },
+    {
+      "id": "3",
+      "name": "Dave",
+      "likes": 2
+    }
+  ]
+}

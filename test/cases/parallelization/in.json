@@ -1,0 +1,5 @@
+{
+  "id": "`id`",
+  "likes": "`id | user-likes | length:likes`",
+  "followers": "`id | user-followers | map | user | user-likes | length:likes,likes`"
+}

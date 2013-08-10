@@ -155,19 +155,20 @@ jsont.use('user-followers', function(id, next) {
   api.followers(id, next);
 });
 
-jsont.use('length', function(likes, path, next) {
-  // We didn't get any params
-  if (typeof path === 'function') return next(null, likes ? likes.length : 0);
+jsont.use('user', function(id, next) {
+  api.get(id, function(err, user) {
+    if (err) return next(err);
 
-  // get and replace the length at `path`
-  var length = get(path, likes).length;
-  next(null, set(path, length, likes));
+    user.id = id;
+    next(null, user);
+  });
 });
 
-jsont.use('partial', function(data, partial, next) {
-  // load your partial here
-  jsont.render(partial, data, next);
-})
+jsont.use('length', function(user, property, position, next) {
+  if (typeof position === 'function') return position(null, user[property].length);
+  user[position] = user[property].length;
+  next(null, user);
+});
 
 jsont.renderFile('user-profile.json', {id: 0}, function(err, out) {
   console.log(out);
@@ -176,8 +177,9 @@ jsont.renderFile('user-profile.json', {id: 0}, function(err, out) {
 
 ```json
 {
-  "likes": "`id | user-likes | length`",
-  "followers": "`id | user-followers | map | user-likes | length:'likes'`"
+  "id": "`id`",
+  "likes": "`id | user-likes | length:likes`",
+  "followers": "`id | user-followers | map | user | user-likes | length:likes,likes`"
 }
 ```
 
@@ -185,17 +187,18 @@ Everything gets put on the event loop and renders as responses come back.
 
 ```json
 {
-  "likes": 42,
+  "id": "1",
+  "likes": 4,
   "followers": [
     {
-      "id": 1,
+      "id": "2",
       "name": "Scott",
-      "likes": 32
+      "likes": 3
     },
     {
-      "id": 2,
+      "id": "3",
       "name": "Dave",
-      "likes": 98
+      "likes": 2
     }
   ]
 }
