@@ -2,24 +2,32 @@ body {
   font-family: Helvetica, Arial, san-serif;
 }
 
+.input textarea {
+  height: 350px;
+  width: 100%;
+  font-family: monospace;
+  resize: none;
+  outline: none;
+}
+
+.error,
+.out {
+  font-family: monospace;
+}
+
 @media (min-width: 820px) {
   .input {
     width: 33%;
     display: inline-block;
     position: relative;
   }
-}
 
-.input textarea {
-  height: 300px;
-  width: 100%;
-  font-family: monospace;
-  font-size: 1.2em;
-  resize: none;
-}
+  .input textarea {
+    font-size: 1.2em;
+  }
 
-.error,
-.out {
-  font-family: monospace;
-  font-size: 1.2em;
+  .error,
+  .out {
+    font-size: 1.2em;
+  }
 }
