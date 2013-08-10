@@ -9740,16 +9740,16 @@ require.register("jsont-demo/template.js", Function("exports, require, module",
 ));
 require.register("jsont-demo/default-helpers.js", Function("exports, require, module",
 "module.exports = function (jsont) {\n\
-  jsont.use('hello', function(input, cb){\n\
+  jsont.use('hello', function(input, cb) {\n\
     cb(null, 'hello, '+input);\n\
   });\n\
 \n\
-  jsont.use('exclaim', function(input, cb){\n\
+  jsont.use('exclaim', function(input, cb) {\n\
     cb(null, input+'!');\n\
   });\n\
 \n\
   // You can even call a database from the template!\n\
-  jsont.use('user', function(id, cb){\n\
+  jsont.use('user', function(id, cb) {\n\
     setTimeout(function(){\n\
       cb(null, {\n\
         href: \"/users/\"+id,\n\
@@ -9757,11 +9757,31 @@ require.register("jsont-demo/default-helpers.js", Function("exports, require, mo
       });\n\
     }, 10);\n\
   });\n\
+\n\
+  jsont.use('parse-int', function(input, cb) {\n\
+    cb(null, parseInt(input));\n\
+  });\n\
+\n\
+  jsont.use('range', function(input, cb) {\n\
+    var r = [];\n\
+    for(var i = 1; i <= input; i++) {\n\
+      r.push(i);\n\
+    }\n\
+    cb(null, r);\n\
+  });\n\
+\n\
+  jsont.use('sum', function(input, cb) {\n\
+    var val = input.reduce(function(prev, curr) {\n\
+      return prev + curr;\n\
+    }, 0);\n\
+    cb(null, val)\n\
+  });\n\
 }//@ sourceURL=jsont-demo/default-helpers.js"
 ));
 require.register("jsont-demo/default-options.js", Function("exports, require, module",
 "module.exports = {\n\
   \"id\": \"1\",\n\
+  \"numbers\": \"10\",\n\
   \"names\": [\n\
     \"cameron\",\n\
     \"scott\",\n\
@@ -9772,7 +9792,8 @@ require.register("jsont-demo/default-options.js", Function("exports, require, mo
 require.register("jsont-demo/default-template.js", Function("exports, require, module",
 "module.exports = {\n\
   \"id\": \"`id | user`\",\n\
-  \"welcomes\": \"`names | map | hello | exclaim`\"\n\
+  \"welcomes\": \"`names | map | hello | exclaim`\",\n\
+  \"triangular-numbers\": \"`numbers | parse-int | range | map | range | sum`\"\n\
 }//@ sourceURL=jsont-demo/default-template.js"
 ));
 
