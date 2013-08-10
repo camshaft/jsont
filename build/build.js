@@ -9716,15 +9716,15 @@ require.register("jsont-demo/template.js", Function("exports, require, module",
 "module.exports = '<div>\\n\
   <div class=\"input\">\\n\
     <h2>Template</h2>\\n\
-    <textarea id=\"input\" value=\"{{input}}\"></textarea>\\n\
+    <textarea id=\"input\" value=\"{{input}}\" spellcheck=\"false\" autocorrect=\"off\" autocapitalize=\"off\"></textarea>\\n\
   </div>\\n\
   <div class=\"input\">\\n\
     <h2>Options</h2>\\n\
-    <textarea id=\"data\" value=\"{{data}}\"></textarea>\\n\
+    <textarea id=\"data\" value=\"{{data}}\" spellcheck=\"false\" autocorrect=\"off\" autocapitalize=\"off\"></textarea>\\n\
   </div>\\n\
   <div class=\"input\">\\n\
     <h2>Helpers</h2>\\n\
-    <textarea id=\"helpers\" value=\"{{helpers}}\"></textarea>\\n\
+    <textarea id=\"helpers\" value=\"{{helpers}}\" spellcheck=\"false\" autocorrect=\"off\" autocapitalize=\"off\"></textarea>\\n\
   </div>\\n\
 </div>\\n\
 <div>\\n\
