@@ -1,0 +1,3 @@
+{
+  "people": "`people | map | fetch | partial:'people'`"
+}

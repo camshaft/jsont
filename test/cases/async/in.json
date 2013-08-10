@@ -1,0 +1,4 @@
+{
+  "people": "`people | map | fetch`",
+  "long-api-call": "`key | long-api-call`"
+}

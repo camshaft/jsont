@@ -1,0 +1,14 @@
+{
+  "name": {
+    "type": "text",
+    "value": "Cameron"
+  },
+  "phone": {
+    "type": "text",
+    "value": "555-555-5555"
+  },
+  "email": {
+    "type": "email",
+    "value": "cameron@theflokk.com"
+  }
+}

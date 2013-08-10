@@ -1,0 +1,17 @@
+{
+  "people": [
+    {
+      "href": "/people/1",
+      "name": "Cameron"
+    },
+    {
+      "href": "/people/2",
+      "name": "Scott"
+    },
+    {
+      "href": "/people/3",
+      "name": "Dave"
+    }
+  ],
+  "long-api-call": 42
+}
