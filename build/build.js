@@ -9747,6 +9747,13 @@ require.register("jsont-demo/default-helpers.js", Function("exports, require, mo
   jsont.use('exclaim', function(input, cb){\n\
     cb(null, input+'!');\n\
   });\n\
+\n\
+  // You can even call a database from the template!\n\
+  jsont.use('user', function(id, cb){\n\
+    setTimeout(function(){\n\
+      cb(null, {href: \"/users/\"+id, name: \"camshaft\"});\n\
+    }, 100);\n\
+  });\n\
 }//@ sourceURL=jsont-demo/default-helpers.js"
 ));
 require.register("jsont-demo/default-options.js", Function("exports, require, module",
@@ -9761,7 +9768,7 @@ require.register("jsont-demo/default-options.js", Function("exports, require, mo
 ));
 require.register("jsont-demo/default-template.js", Function("exports, require, module",
 "module.exports = {\n\
-  \"id\": \"`id`\",\n\
+  \"id\": \"`id | user`\",\n\
   \"welcomes\": \"`names | map | hello | exclaim`\"\n\
 }//@ sourceURL=jsont-demo/default-template.js"
 ));
