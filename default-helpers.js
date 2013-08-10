@@ -10,7 +10,10 @@ module.exports = function (jsont) {
   // You can even call a database from the template!
   jsont.use('user', function(id, cb){
     setTimeout(function(){
-      cb(null, {href: "/users/"+id, name: "camshaft"});
+      cb(null, {
+        href: "/users/"+id,
+        name: "camshaft"
+      });
     }, 10);
   });
 }

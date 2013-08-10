@@ -9751,7 +9751,10 @@ require.register("jsont-demo/default-helpers.js", Function("exports, require, mo
   // You can even call a database from the template!\n\
   jsont.use('user', function(id, cb){\n\
     setTimeout(function(){\n\
-      cb(null, {href: \"/users/\"+id, name: \"camshaft\"});\n\
+      cb(null, {\n\
+        href: \"/users/\"+id,\n\
+        name: \"camshaft\"\n\
+      });\n\
     }, 10);\n\
   });\n\
 }//@ sourceURL=jsont-demo/default-helpers.js"

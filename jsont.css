@@ -1,5 +1,10 @@
 body {
   font-family: Helvetica, Arial, san-serif;
+  position: relative;
+}
+
+.input {
+  position: relative;
 }
 
 .input textarea {
@@ -19,7 +24,6 @@ body {
   .input {
     width: 33%;
     display: inline-block;
-    position: relative;
   }
 
   .input textarea {
