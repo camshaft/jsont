@@ -1,0 +1,4 @@
+{
+  "coders": "`users | map | is-allowed-to:code | pre | pre | pre | pre | pre | collect | post | post | post | post | filter-falsy`",
+  "analyze": "`users | map | is-allowed-to:analyze | pre | pre | pre | collect | post | post | filter-falsy`"
+}
