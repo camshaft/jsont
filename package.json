@@ -1,6 +1,6 @@
 {
   "name": "jsont",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Simple json template language",
   "main": "index.js",
   "directories": {

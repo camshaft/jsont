@@ -1,4 +1,4 @@
-jsont
+jsont [![Build Status](https://travis-ci.org/CamShaft/jsont.png?branch=master)](https://travis-ci.org/CamShaft/jsont)
 =====
 
 Simple json template language
