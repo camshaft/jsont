@@ -100,7 +100,7 @@ Out comes:
 }
 ```
 
-You can also pass arguments and chain arguments
+You can also pass arguments and chain helpers
 
 ```json
 {
