@@ -218,7 +218,9 @@ TODO
 
   ```json
   {
-    "user": "{id: id, name: name} | my-helper"
+    "user": "`{id: id, name: name} | my-helper`"
   }
   ```
 * Cache compiled templates using the `filename` option
+* Expose concurrency settings
+* Allow option to configure escape character 
