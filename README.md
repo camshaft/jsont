@@ -80,7 +80,7 @@ You can easily extend `jsont` by calling `use`:
 var jsont = require('jsont')();
 
 jsont.use('reverse', function(input, next) {
-  next(null, input.reverse());
+  next(null, input.split("").reverse().join(""));
 });
 ```
 
