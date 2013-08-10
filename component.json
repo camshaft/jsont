@@ -21,6 +21,12 @@
     "github-api-helpers.js",
     "github-api-options.js",
     "github-api-template.js",
+    "is-allowed-helpers.js",
+    "is-allowed-options.js",
+    "is-allowed-template.js",
+    "project-helpers.js",
+    "project-options.js",
+    "project-template.js",
     "triangular-helpers.js",
     "triangular-options.js",
     "triangular-template.js"

@@ -7,8 +7,6 @@ var JSONt = require('jsont');
 var template = require('./template');
 
 module.exports = function(defaultDemo) {
-  var jsont = JSONt();
-
   var ractive = new Ractive({
     el: document.getElementById('main'),
     template: template,
@@ -16,6 +14,8 @@ module.exports = function(defaultDemo) {
       demos: [
         {id: 'default', name: 'Basic'},
         {id: 'github-api', name: 'GitHub API'},
+        {id: 'project', name: 'GitHub Project Pages'},
+        {id: 'is-allowed', name: 'Is Allowed'},
         {id: 'triangular', name: 'Triangular Numbers'}
       ],
       demo: getHash(defaultDemo)
@@ -41,10 +41,12 @@ module.exports = function(defaultDemo) {
       var data = ractive.get('data');
       var helpers = eval(ractive.get('helpers'));
 
-      var render = jsont(input, {});
+      var jsont = JSONt();
 
-      if (typeof helpers === 'function') helpers(render);
+      if (typeof helpers === 'function') helpers(jsont);
       if (!data) return;
+
+      var render = jsont(input, {});
 
       var opts = JSON.parse(data);
 

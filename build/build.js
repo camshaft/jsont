@@ -10670,8 +10670,6 @@ var JSONt = require('jsont');\n\
 var template = require('./template');\n\
 \n\
 module.exports = function(defaultDemo) {\n\
-  var jsont = JSONt();\n\
-\n\
   var ractive = new Ractive({\n\
     el: document.getElementById('main'),\n\
     template: template,\n\
@@ -10679,6 +10677,8 @@ module.exports = function(defaultDemo) {\n\
       demos: [\n\
         {id: 'default', name: 'Basic'},\n\
         {id: 'github-api', name: 'GitHub API'},\n\
+        {id: 'project', name: 'GitHub Project Pages'},\n\
+        {id: 'is-allowed', name: 'Is Allowed'},\n\
         {id: 'triangular', name: 'Triangular Numbers'}\n\
       ],\n\
       demo: getHash(defaultDemo)\n\
@@ -10704,10 +10704,12 @@ module.exports = function(defaultDemo) {\n\
       var data = ractive.get('data');\n\
       var helpers = eval(ractive.get('helpers'));\n\
 \n\
-      var render = jsont(input, {});\n\
+      var jsont = JSONt();\n\
 \n\
-      if (typeof helpers === 'function') helpers(render);\n\
+      if (typeof helpers === 'function') helpers(jsont);\n\
       if (!data) return;\n\
+\n\
+      var render = jsont(input, {});\n\
 \n\
       var opts = JSON.parse(data);\n\
 \n\
@@ -10841,6 +10843,70 @@ require.register("jsont-demo/github-api-template.js", Function("exports, require
 "module.exports = {\n\
   \"github-users\": \"`range | parse-int | range | map | user | prop:login | hello | exclaim`\"\n\
 }//@ sourceURL=jsont-demo/github-api-template.js"
+));
+require.register("jsont-demo/is-allowed-helpers.js", Function("exports, require, module",
+"module.exports = function (jsont) {\n\
+  var partials = {\n\
+    code: {\n\
+      action: '/code',\n\
+      method: 'POST',\n\
+      input: {\n\
+        user: '`username`'\n\
+      }\n\
+    }\n\
+  };\n\
+\n\
+  jsont.use('is-allowed-to', function(input, perm, cb) {\n\
+    if (perm === 'code') return cb(null, input);\n\
+    cb(null, undefined);\n\
+  });\n\
+\n\
+  jsont.use('partial', function(username, partial, cb) {\n\
+    if (!username) return cb();\n\
+    jsont.render(partials[partial], {\n\
+      username: username\n\
+    }, cb);\n\
+  });\n\
+}//@ sourceURL=jsont-demo/is-allowed-helpers.js"
+));
+require.register("jsont-demo/is-allowed-options.js", Function("exports, require, module",
+"module.exports = {\n\
+  \"username\": \"CamShaft\"\n\
+}//@ sourceURL=jsont-demo/is-allowed-options.js"
+));
+require.register("jsont-demo/is-allowed-template.js", Function("exports, require, module",
+"module.exports = {\n\
+  \"code\": \"`username | is-allowed-to:code | partial:code`\",\n\
+  \"sit-around\": \"`username | is-allowed-to:sit-around | partial:sit-around`\"\n\
+}//@ sourceURL=jsont-demo/is-allowed-template.js"
+));
+require.register("jsont-demo/project-helpers.js", Function("exports, require, module",
+"module.exports = function (jsont) {\n\
+  jsont.use('github-project', function(project, cb) {\n\
+    if (typeof project === 'string') return cb(null, 'https://' + project + '.github.io');\n\
+    cb(null, 'https://' + project.owner + '.github.io/' + project.name);\n\
+  });\n\
+}//@ sourceURL=jsont-demo/project-helpers.js"
+));
+require.register("jsont-demo/project-options.js", Function("exports, require, module",
+"module.exports = {\n\
+  \"projects\": [\n\
+    \"CamShaft\",\n\
+    {\n\
+      \"owner\": \"CamShaft\",\n\
+      \"name\": \"jsont\"\n\
+    },\n\
+    {\n\
+      \"owner\": \"visionmedia\",\n\
+      \"name\": \"superagent\"\n\
+    }\n\
+  ]\n\
+}//@ sourceURL=jsont-demo/project-options.js"
+));
+require.register("jsont-demo/project-template.js", Function("exports, require, module",
+"module.exports = {\n\
+  \"starred-projects\": \"`projects | map | github-project`\"\n\
+}//@ sourceURL=jsont-demo/project-template.js"
 ));
 require.register("jsont-demo/triangular-helpers.js", Function("exports, require, module",
 "module.exports = function (jsont) {\n\
