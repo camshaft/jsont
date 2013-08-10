@@ -1,11 +1,14 @@
 {
   "name": {
+    "type": "`'name' | type`",
     "value": "`name`"
   },
   "phone": {
+    "type": "`'phone' | type`",
     "value": "`phone`"
   },
   "email": {
+    "type": "`'email' | type`",
     "value": "`email`"
   }
 }
