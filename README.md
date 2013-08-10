@@ -140,28 +140,44 @@ Since helpers are all asynchronous behind the scenes we get parallelization in a
 ```js
 var api = require('./api');
 
-jsont.use('userLikes', function(id, next) {
-  api.likes(id, next);
+jsont.use('user-likes', function(user, next) {
+  if (typeof user !== 'object') user = {id: user};
+
+  api.likes(user.id, function(err, likes) {
+    if (err) return next(err);
+
+    user.likes = likes;
+    next(null, user);
+  });
 });
 
-jsont.use('userFollowers', function(id, next) {
+jsont.use('user-followers', function(id, next) {
   api.followers(id, next);
 });
 
-jsont.use('length', function(likes, next) {
-  next(null, likes ? likes.length : 0);
+jsont.use('length', function(likes, path, next) {
+  // We didn't get any params
+  if (typeof path === 'function') return next(null, likes ? likes.length : 0);
+
+  // get and replace the length at `path`
+  var length = get(path, likes).length;
+  next(null, set(path, length, likes));
 });
 
 jsont.use('partial', function(data, partial, next) {
   // load your partial here
   jsont.render(partial, data, next);
 })
+
+jsont.renderFile('user-profile.json', {id: 0}, function(err, out) {
+  console.log(out);
+});
 ```
 
 ```json
 {
-  "likes": "`id | userLikes | length`",
-  "followers": "`id | userFollowers | map | partial:follower`"
+  "likes": "`id | user-likes | length`",
+  "followers": "`id | user-followers | map | user-likes | length:'likes'`"
 }
 ```
 
@@ -173,11 +189,13 @@ Everything gets put on the event loop and renders as responses come back.
   "followers": [
     {
       "id": 1,
-      "name": "Scott"
+      "name": "Scott",
+      "likes": 32
     },
     {
       "id": 2,
-      "name": "Dave"
+      "name": "Dave",
+      "likes": 98
     }
   ]
 }
