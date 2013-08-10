@@ -210,3 +210,15 @@ Tests
 ```sh
 $ npm test
 ```
+
+TODO
+----
+
+* Create a richer evaluator to do something like:
+
+  ```json
+  {
+    "user": "{id: id, name: name} | my-helper"
+  }
+  ```
+* Cache compiled templates using the `filename` option
