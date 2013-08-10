@@ -16,6 +16,7 @@ module.exports = function(defaultDemo) {
         {id: 'github-api', name: 'GitHub API'},
         {id: 'project', name: 'GitHub Project Pages'},
         {id: 'is-allowed', name: 'Is Allowed', message: 'See what happens when you change the username to Scott'},
+        {id: 'collect', name: 'Map->Collect'},
         {id: 'triangular', name: 'Triangular Numbers', message: 'Here we can compute the triangular numbers from 1 - N'}
       ],
       demo: getHash(defaultDemo)

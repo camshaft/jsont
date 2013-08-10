@@ -15,6 +15,9 @@
   "scripts": [
     "index.js",
     "template.js",
+    "collect-helpers.js",
+    "collect-options.js",
+    "collect-template.js",
     "default-helpers.js",
     "default-options.js",
     "default-template.js",

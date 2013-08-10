@@ -795,8 +795,13 @@ try {\n\
 var stack = require('./stack');\n\
 var set = require('./utils').set;\n\
 \n\
-exports.map = function(input, done) {\n\
+exports.map = function(input, concurrency, done) {\n\
   var self = this;\n\
+\n\
+  if (type(concurrency) === 'function') {\n\
+    done = concurrency;\n\
+    concurrency = undefined;\n\
+  };\n\
 \n\
   var inputType = type(input);\n\
   var obj;\n\
@@ -806,9 +811,19 @@ exports.map = function(input, done) {\n\
 \n\
   var batch = new Batch;\n\
 \n\
+  if (concurrency) batch.concurrency(concurrency);\n\
+\n\
+  var collect = indexOf(self.stack, function(helper) {\n\
+    if (helper.title == 'collect') return true;\n\
+  });\n\
+\n\
+  var substack = ~collect\n\
+    ? self.stack.slice(0, collect)\n\
+    : self.stack;\n\
+\n\
   each(input, function(value, key) {\n\
     batch.push(function(next) {\n\
-      stack.call(self, self.stack.slice(0), value, function(err, value) {\n\
+      stack.call(self, substack.slice(0), value, function(err, value) {\n\
         if (err) return next(err);\n\
         set([key], value, obj);\n\
         next();\n\
@@ -817,11 +832,38 @@ exports.map = function(input, done) {\n\
   });\n\
 \n\
   batch.end(function(err) {\n\
-    // Don't use done - we're controling the stack now\n\
-    if (err) self.exit(err);\n\
+    if (err) return done(err);\n\
+\n\
+    // We're collecting the results\n\
+    if (~collect) {\n\
+      // Discard the stack that we've already executed\n\
+      shift(self.stack, collect);\n\
+      return done(null, obj);\n\
+    };\n\
+\n\
+    // Set it on the render\n\
     self.set(self.path, obj);\n\
+    // Take control of the stack\n\
     self.exit();\n\
   });\n\
+};\n\
+\n\
+exports.collect = function(input, done) {\n\
+  console.log('i shouldn\\' be called');\n\
+  done(null, input);\n\
+};\n\
+\n\
+function shift(arr, count) {\n\
+  for (var i = 0; i < count; ++i) {\n\
+    arr.shift();\n\
+  }\n\
+};\n\
+\n\
+function indexOf(arr, fn) {\n\
+  for (var i = 0, len = arr.length; i < len; ++i) {\n\
+    if (fn(arr[i], i)) return i;\n\
+  }\n\
+  return -1;\n\
 };\n\
 //@ sourceURL=CamShaft-jsont/lib/helpers.js"
 ));
@@ -984,6 +1026,7 @@ module.exports = exec;\n\
 function exec(stack, data, done) {\n\
   var self = this;\n\
   var fn = stack.shift();\n\
+  console.log(fn.title, data);\n\
 \n\
   // We're all done\n\
   if (!fn) return done(null, data);\n\
@@ -10679,6 +10722,7 @@ module.exports = function(defaultDemo) {\n\
         {id: 'github-api', name: 'GitHub API'},\n\
         {id: 'project', name: 'GitHub Project Pages'},\n\
         {id: 'is-allowed', name: 'Is Allowed', message: 'See what happens when you change the username to Scott'},\n\
+        {id: 'collect', name: 'Map->Collect'},\n\
         {id: 'triangular', name: 'Triangular Numbers', message: 'Here we can compute the triangular numbers from 1 - N'}\n\
       ],\n\
       demo: getHash(defaultDemo)\n\
@@ -10783,6 +10827,48 @@ require.register("jsont-demo/template.js", Function("exports, require, module",
   {{/error}}\\n\
 </div>\\n\
 ';//@ sourceURL=jsont-demo/template.js"
+));
+require.register("jsont-demo/collect-helpers.js", Function("exports, require, module",
+"module.exports = function (jsont) {\n\
+  var users = {\n\
+    \"1\": {\n\
+      name: \"Cameron\",\n\
+      followers: 100\n\
+    },\n\
+    \"2\": {\n\
+      name: \"Scott\",\n\
+      followers: 4\n\
+    },\n\
+    \"3\": {\n\
+      name: \"Dave\",\n\
+      followers: 50\n\
+    }\n\
+  }\n\
+\n\
+  jsont.use('user', function(id, cb) {\n\
+    cb(null, users[id]);\n\
+  });\n\
+\n\
+  jsont.use('filter-unpopular', function(users, cb) {\n\
+    cb(null, users.filter(function(user) {\n\
+      return user.followers > 49;\n\
+    }));\n\
+  });\n\
+}//@ sourceURL=jsont-demo/collect-helpers.js"
+));
+require.register("jsont-demo/collect-options.js", Function("exports, require, module",
+"module.exports = {\n\
+  \"users\": [\n\
+    \"1\",\n\
+    \"2\",\n\
+    \"3\"\n\
+  ]\n\
+}//@ sourceURL=jsont-demo/collect-options.js"
+));
+require.register("jsont-demo/collect-template.js", Function("exports, require, module",
+"module.exports = {\n\
+  \"popular-people\": \"`users | map | user | collect | filter-unpopular`\"\n\
+}//@ sourceURL=jsont-demo/collect-template.js"
 ));
 require.register("jsont-demo/default-helpers.js", Function("exports, require, module",
 "module.exports = function (jsont) {\n\
