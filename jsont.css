@@ -2,10 +2,12 @@ body {
   font-family: Helvetica, Arial, san-serif;
 }
 
-.input {
-  width: 33%;
-  display: inline-block;
-  position: relative;
+@media (min-width: 820px) {
+  .input {
+    width: 33%;
+    display: inline-block;
+    position: relative;
+  }
 }
 
 .input textarea {
