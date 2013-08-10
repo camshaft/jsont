@@ -6,7 +6,7 @@ var people = {
 };
 
 module.exports = function(jsont) {
-  jsont.pipe('fetch', function(id, done) {
+  jsont.use('fetch', function(id, done) {
     setTimeout(function() {
       done(null, {
         href: '/people/'+id,
@@ -15,7 +15,7 @@ module.exports = function(jsont) {
     }, 2);
   });
 
-  jsont.pipe('long-api-call', function(key, done) {
+  jsont.use('long-api-call', function(key, done) {
     setTimeout(function() {
       var value = key === 'testing'
         ? 42

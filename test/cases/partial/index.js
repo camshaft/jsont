@@ -6,14 +6,14 @@ var people = {
 };
 
 module.exports = function(jsont) {
-  jsont.pipe('partial', function(person, partial, done) {
+  jsont.use('partial', function(person, partial, done) {
     var p = require('./'+partial);
 
     var fn = jsont.compile(p);
     fn(person, done);
   });
 
-  jsont.pipe('fetch', function(id, done) {
+  jsont.use('fetch', function(id, done) {
     setTimeout(function() {
       done(null, people[id]);
     }, 2);
