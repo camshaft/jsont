@@ -1,4 +1,6 @@
 {
   "coders" : ["Cameron"],
-  "analyze": ["Scott"]
+  "analyze": ["Scott"],
+  "other": ["Cameron", "Scott", "Dave"],
+  "admin": []
 }

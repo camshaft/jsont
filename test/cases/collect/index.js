@@ -2,6 +2,7 @@ module.exports = function (jsont) {
   jsont.use('is-allowed-to', function(input, perm, cb) {
     if (perm === 'code' && input === 'Cameron') return cb(null, input);
     if (perm === 'analyze' && input === 'Scott') return cb(null, input);
+    if (perm === 'other') return cb(null, input);
     cb(null, undefined);
   });
 
