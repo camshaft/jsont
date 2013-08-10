@@ -1,0 +1,26 @@
+{
+  "name": "jsont",
+  "repo": "CamShaft/jsont",
+  "description": "Simple json template language",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {
+    "component/format-parser": "*",
+    "component/type": "*",
+    "wilmoore/selectn": "*",
+    "visionmedia/batch": "*"
+  },
+  "development": {},
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": [
+    "index.js",
+    "lib/each.js",
+    "lib/helpers.js",
+    "lib/index.js",
+    "lib/render.js",
+    "lib/stack.js",
+    "lib/template.js",
+    "lib/utils.js"
+  ]
+}
