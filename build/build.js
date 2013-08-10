@@ -9752,7 +9752,7 @@ require.register("jsont-demo/default-helpers.js", Function("exports, require, mo
   jsont.use('user', function(id, cb){\n\
     setTimeout(function(){\n\
       cb(null, {href: \"/users/\"+id, name: \"camshaft\"});\n\
-    }, 100);\n\
+    }, 10);\n\
   });\n\
 }//@ sourceURL=jsont-demo/default-helpers.js"
 ));

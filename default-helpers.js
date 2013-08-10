@@ -11,6 +11,6 @@ module.exports = function (jsont) {
   jsont.use('user', function(id, cb){
     setTimeout(function(){
       cb(null, {href: "/users/"+id, name: "camshaft"});
-    }, 100);
+    }, 10);
   });
 }
