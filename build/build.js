@@ -9762,7 +9762,7 @@ require.register("jsont-demo/default-options.js", Function("exports, require, mo
 require.register("jsont-demo/default-template.js", Function("exports, require, module",
 "module.exports = {\n\
   \"id\": \"`id`\",\n\
-  \"test\": \"`names | map | hello | exclaim`\"\n\
+  \"welcomes\": \"`names | map | hello | exclaim`\"\n\
 }//@ sourceURL=jsont-demo/default-template.js"
 ));
 

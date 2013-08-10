@@ -1,4 +1,4 @@
 module.exports = {
   "id": "`id`",
-  "test": "`names | map | hello | exclaim`"
+  "welcomes": "`names | map | hello | exclaim`"
 }
