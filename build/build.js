@@ -10678,8 +10678,8 @@ module.exports = function(defaultDemo) {\n\
         {id: 'default', name: 'Basic'},\n\
         {id: 'github-api', name: 'GitHub API'},\n\
         {id: 'project', name: 'GitHub Project Pages'},\n\
-        {id: 'is-allowed', name: 'Is Allowed'},\n\
-        {id: 'triangular', name: 'Triangular Numbers'}\n\
+        {id: 'is-allowed', name: 'Is Allowed', message: 'See what happens when you change the username to Scott'},\n\
+        {id: 'triangular', name: 'Triangular Numbers', message: 'Here we can compute the triangular numbers from 1 - N'}\n\
       ],\n\
       demo: getHash(defaultDemo)\n\
     }\n\
@@ -10689,6 +10689,10 @@ module.exports = function(defaultDemo) {\n\
     try {\n\
       ractive.set(getDemoData(demo));\n\
       window.location.hash = demo;\n\
+\n\
+      ractive.get('demos').forEach(function(d) {\n\
+        if (d.id == demo) ractive.set('message', d.message);\n\
+      });\n\
     } catch (err) {\n\
       ractive.set('error', err.stack);\n\
     }\n\
@@ -10750,6 +10754,7 @@ require.register("jsont-demo/template.js", Function("exports, require, module",
     <option value=\\'{{id}}\\'>{{name}}</option>\\n\
   {{/demos}}\\n\
 </select>\\n\
+<p>{{message}}</p>\\n\
 <div class=\"top\">\\n\
   <div class=\"panel\">\\n\
     <h2>Template</h2>\\n\
@@ -10853,11 +10858,19 @@ require.register("jsont-demo/is-allowed-helpers.js", Function("exports, require,
       input: {\n\
         user: '`username`'\n\
       }\n\
+    },\n\
+   'sit-around': {\n\
+      action: '/sit-around',\n\
+      method: 'POST',\n\
+      input: {\n\
+        user: '`username`'\n\
+      }\n\
     }\n\
   };\n\
 \n\
   jsont.use('is-allowed-to', function(input, perm, cb) {\n\
     if (perm === 'code' && input === 'CamShaft') return cb(null, input);\n\
+    if (perm === 'sit-around' && input === 'Scott') return cb(null, input);\n\
     cb(null, undefined);\n\
   });\n\
 \n\
@@ -10910,10 +10923,6 @@ require.register("jsont-demo/project-template.js", Function("exports, require, m
 ));
 require.register("jsont-demo/triangular-helpers.js", Function("exports, require, module",
 "module.exports = function (jsont) {\n\
-  jsont.use('parse-int', function(input, cb) {\n\
-    cb(null, parseInt(input));\n\
-  });\n\
-\n\
   jsont.use('range', function(input, cb) {\n\
     var r = [];\n\
     for(var i = 1; i <= input; i++) {\n\
@@ -10932,12 +10941,12 @@ require.register("jsont-demo/triangular-helpers.js", Function("exports, require,
 ));
 require.register("jsont-demo/triangular-options.js", Function("exports, require, module",
 "module.exports = {\n\
-  \"numbers\": \"10\"\n\
+  \"numbers\": 10\n\
 }//@ sourceURL=jsont-demo/triangular-options.js"
 ));
 require.register("jsont-demo/triangular-template.js", Function("exports, require, module",
 "module.exports = {\n\
-  \"triangular-numbers\": \"`numbers | parse-int | range | map | range | sum`\"\n\
+  \"triangular-numbers\": \"`numbers | range | map | range | sum`\"\n\
 }//@ sourceURL=jsont-demo/triangular-template.js"
 ));
 

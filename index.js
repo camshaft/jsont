@@ -15,8 +15,8 @@ module.exports = function(defaultDemo) {
         {id: 'default', name: 'Basic'},
         {id: 'github-api', name: 'GitHub API'},
         {id: 'project', name: 'GitHub Project Pages'},
-        {id: 'is-allowed', name: 'Is Allowed'},
-        {id: 'triangular', name: 'Triangular Numbers'}
+        {id: 'is-allowed', name: 'Is Allowed', message: 'See what happens when you change the username to Scott'},
+        {id: 'triangular', name: 'Triangular Numbers', message: 'Here we can compute the triangular numbers from 1 - N'}
       ],
       demo: getHash(defaultDemo)
     }
@@ -26,6 +26,10 @@ module.exports = function(defaultDemo) {
     try {
       ractive.set(getDemoData(demo));
       window.location.hash = demo;
+
+      ractive.get('demos').forEach(function(d) {
+        if (d.id == demo) ractive.set('message', d.message);
+      });
     } catch (err) {
       ractive.set('error', err.stack);
     }

@@ -1,8 +1,4 @@
 module.exports = function (jsont) {
-  jsont.use('parse-int', function(input, cb) {
-    cb(null, parseInt(input));
-  });
-
   jsont.use('range', function(input, cb) {
     var r = [];
     for(var i = 1; i <= input; i++) {

@@ -1,3 +1,3 @@
 module.exports = {
-  "triangular-numbers": "`numbers | parse-int | range | map | range | sum`"
+  "triangular-numbers": "`numbers | range | map | range | sum`"
 }

@@ -6,11 +6,19 @@ module.exports = function (jsont) {
       input: {
         user: '`username`'
       }
+    },
+   'sit-around': {
+      action: '/sit-around',
+      method: 'POST',
+      input: {
+        user: '`username`'
+      }
     }
   };
 
   jsont.use('is-allowed-to', function(input, perm, cb) {
     if (perm === 'code' && input === 'CamShaft') return cb(null, input);
+    if (perm === 'sit-around' && input === 'Scott') return cb(null, input);
     cb(null, undefined);
   });
 
