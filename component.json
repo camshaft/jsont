@@ -1,0 +1,24 @@
+{
+  "name": "jsont-demo",
+  "repo": "CamShaft/jsont-demo",
+  "description": "Doc page for jsont",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {
+    "CamShaft/jsont": "*",
+    "CamShaft/Ractive": "*"
+  },
+  "development": {},
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": [
+    "index.js",
+    "template.js",
+    "default-helpers.js",
+    "default-options.js",
+    "default-template.js"
+  ],
+  "styles": [
+    "jsont.css"
+  ]
+}

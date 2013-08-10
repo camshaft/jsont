@@ -1,0 +1,24 @@
+<div>
+  <div class="input">
+    <h2>Template</h2>
+    <textarea id="input" value="{{input}}"></textarea>
+  </div>
+  <div class="input">
+    <h2>Options</h2>
+    <textarea id="data" value="{{data}}"></textarea>
+  </div>
+  <div class="input">
+    <h2>Helpers</h2>
+    <textarea id="helpers" value="{{helpers}}"></textarea>
+  </div>
+</div>
+<div>
+  <h2>Output</h2>
+  <pre class="out">{{out}}</pre>
+</div>
+{{#error}}
+<div>
+  <h2>Error</h2>
+  <pre class="error">{{error}}</pre>
+</div>
+{{/error}}
