@@ -3,41 +3,77 @@
  */
 
 var Ractive = require('Ractive');
-var jsont = require('jsont')();
+var JSONt = require('jsont');
 var template = require('./template');
 
-var ractive = new Ractive({
-  el: document.getElementById('main'),
-  template: template,
-  data: {
-    data: JSON.stringify(require('./default-options'), null, '  '),
-    helpers: 'module.exports = ' + require('./default-helpers').toString(),
-    input: JSON.stringify(require('./default-template'), null, '  ')
-  }
-});
+module.exports = function(defaultDemo) {
+  var jsont = JSONt();
 
-ractive.observe('input', update);
-ractive.observe('helpers', update);
-ractive.observe('data', update);
+  var ractive = new Ractive({
+    el: document.getElementById('main'),
+    template: template,
+    data: {
+      demos: [
+        {id: 'default', name: 'Basic'},
+        {id: 'github-api', name: 'GitHub API'},
+        {id: 'triangular', name: 'Triangular Numbers'}
+      ],
+      demo: getHash(defaultDemo)
+    }
+  });
 
-function update() {
-  try {
-    var input = ractive.get('input');
-    var data = ractive.get('data');
-    var helpers = eval(ractive.get('helpers'));
+  ractive.observe('demo', function(demo) {
+    try {
+      ractive.set(getDemoData(demo));
+      window.location.hash = demo;
+    } catch (err) {
+      ractive.set('error', err.stack);
+    }
+  });
 
-    var render = jsont(input, {});
+  ractive.observe('input', update);
+  ractive.observe('helpers', update);
+  ractive.observe('data', update);
 
-    if (typeof helpers === 'function') helpers(render);
+  function update() {
+    try {
+      var input = ractive.get('input');
+      var data = ractive.get('data');
+      var helpers = eval(ractive.get('helpers'));
 
-    var opts = JSON.parse(data);
+      var render = jsont(input, {});
 
-    render(opts, function(err, out) {
-      if (err) return ractive.set('error', err.stack);
-      else ractive.set('error', false);
-      ractive.set('out', JSON.stringify(out, null, '  '));
-    });
-  } catch (err) {
-    ractive.set('error', err.stack);
-  }
+      if (typeof helpers === 'function') helpers(render);
+      if (!data) return;
+
+      var opts = JSON.parse(data);
+
+      var start = Date.now();
+      render(opts, function(err, out) {
+        ractive.set('runtime', Date.now() - start);
+        if (err) return ractive.set('error', err.stack);
+        else ractive.set('error', false);
+        ractive.set('out', JSON.stringify(out, null, '  '));
+      });
+    } catch (err) {
+      ractive.set('error', err.stack);
+    }
+  };
+};
+
+function getHash(defaultVal) {
+  if (window.location.hash) return window.location.hash.slice(1);
+  return defaultVal;
+};
+
+function getDemoData(demo) {
+  return {
+    input: requireJSON('./'+demo+'-template'),
+    data: requireJSON('./'+demo+'-options'),
+    helpers: 'module.exports = ' + require('./'+demo+'-helpers').toString()
+  };
+};
+
+function requireJSON(file) {
+  return JSON.stringify(require(file), null, '  ');
 };

@@ -6,7 +6,8 @@
   "keywords": [],
   "dependencies": {
     "CamShaft/jsont": "*",
-    "CamShaft/Ractive": "*"
+    "CamShaft/Ractive": "*",
+    "visionmedia/superagent": "*"
   },
   "development": {},
   "license": "MIT",
@@ -16,7 +17,13 @@
     "template.js",
     "default-helpers.js",
     "default-options.js",
-    "default-template.js"
+    "default-template.js",
+    "github-api-helpers.js",
+    "github-api-options.js",
+    "github-api-template.js",
+    "triangular-helpers.js",
+    "triangular-options.js",
+    "triangular-template.js"
   ],
   "styles": [
     "jsont.css"

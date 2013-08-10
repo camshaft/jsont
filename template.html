@@ -1,3 +1,8 @@
+<select value='{{demo}}'>
+  {{#demos}}
+    <option value='{{id}}'>{{name}}</option>
+  {{/demos}}
+</select>
 <div class="top">
   <div class="panel">
     <h2>Template</h2>
@@ -15,6 +20,7 @@
 <div class="bottom">
   <div class="panel">
     <h2>Output</h2>
+    <p>{{runtime}}ms</p>
     <pre class="out">{{out}}</pre>
   </div>
   {{#error}}
