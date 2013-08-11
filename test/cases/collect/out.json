@@ -2,5 +2,5 @@
   "coders" : ["Cameron"],
   "analyze": ["Scott"],
   "other": ["Cameron", "Scott", "Dave"],
-  "admin": []
+  "admin": [null, null, null]
 }

@@ -26,7 +26,7 @@ describe('jsont', function(){
 
       render(data, function(err, actual) {
         if (err) return done(err);
-        expect(actual).to.eql(expected);
+        expect(JSON.parse(JSON.stringify(actual))).to.eql(expected);
         done();
       });
     });
