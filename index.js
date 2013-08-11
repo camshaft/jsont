@@ -48,7 +48,13 @@ module.exports = function(defaultDemo) {
 
       var jsont = JSONt();
 
-      if (typeof helpers === 'function') helpers(jsont);
+      ractive.set('log', '');
+
+      function log() {
+        ractive.set('log', ractive.get('log') + Array.prototype.join.call(arguments, ' ') + '\n');
+      };
+
+      if (typeof helpers === 'function') helpers(jsont, log);
       if (!data) return;
 
       var render = jsont(input, {});

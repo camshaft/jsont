@@ -10763,7 +10763,14 @@ module.exports = function(defaultDemo) {\n\
 \n\
       var jsont = JSONt();\n\
 \n\
-      if (typeof helpers === 'function') helpers(jsont);\n\
+      ractive.set('log', '');\n\
+\n\
+      function log() {\n\
+        ractive.set('log', ractive.get('log') + Array.prototype.join.call(arguments, ' ') + '\\n\
+');\n\
+      };\n\
+\n\
+      if (typeof helpers === 'function') helpers(jsont, log);\n\
       if (!data) return;\n\
 \n\
       var render = jsont(input, {});\n\
@@ -10834,6 +10841,12 @@ require.register("jsont-demo/template.js", Function("exports, require, module",
     <pre class=\"error\">{{error}}</pre>\\n\
   </div>\\n\
   {{/error}}\\n\
+  {{#log}}\\n\
+  <div class=\"panel\">\\n\
+    <h2>Log</h2>\\n\
+    <pre class=\"log\">{{log}}</pre>\\n\
+  </div>\\n\
+  {{/log}}\\n\
 </div>\\n\
 ';//@ sourceURL=jsont-demo/template.js"
 ));
