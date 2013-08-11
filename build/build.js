@@ -1039,9 +1039,9 @@ function exec(stack, data, done) {\n\
     fn.call(self, data, function(err, val) {\n\
       if (err) return done(err);\n\
       // TODO figure out a better way to not have a huge stack\n\
-      setTimeout(function() {\n\
+      // setTimeout(function() {\n\
         exec.call(self, stack, val, done);\n\
-      }, 0);\n\
+      // }, 0);\n\
     });\n\
   } catch (e) {\n\
     done(e);\n\
