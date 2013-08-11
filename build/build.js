@@ -849,7 +849,6 @@ exports.map = function(input, concurrency, done) {\n\
 };\n\
 \n\
 exports.collect = function(input, done) {\n\
-  console.log('i shouldn\\' be called');\n\
   done(null, input);\n\
 };\n\
 \n\
@@ -1026,7 +1025,6 @@ module.exports = exec;\n\
 function exec(stack, data, done) {\n\
   var self = this;\n\
   var fn = stack.shift();\n\
-  console.log(fn.title, data);\n\
 \n\
   // We're all done\n\
   if (!fn) return done(null, data);\n\
@@ -1034,6 +1032,7 @@ function exec(stack, data, done) {\n\
   try {\n\
     fn.call(self, data, function(err, val) {\n\
       if (err) return done(err);\n\
+      // TODO figure out a better way to not have a huge stack\n\
       setTimeout(function() {\n\
         exec.call(self, stack, val, done);\n\
       }, 0);\n\
@@ -1177,7 +1176,11 @@ function parse(value, path) {\n\
 };\n\
 \n\
 function helper(name, args) {\n\
-  return function(input, next) {\n\
+  execHelper.title = name;\n\
+  execHelper.args = args;\n\
+  return execHelper;\n\
+\n\
+  function execHelper(input, next) {\n\
     // Find the helper\n\
     var helper = this.helpers[name];\n\
     if (!helper) return next(new Error('Invalid helper \"' + name + '\" at ' + this.path));\n\
