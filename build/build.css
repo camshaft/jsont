@@ -14,6 +14,9 @@ body {
   font-family: monospace;
   resize: none;
   outline: none;
+  white-space: pre;
+  word-wrap: normal;
+  overflow-x: scroll;
 }
 
 .error,

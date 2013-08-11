@@ -10830,15 +10830,15 @@ require.register("jsont-demo/template.js", Function("exports, require, module",
 <div class=\"top\">\\n\
   <div class=\"panel\">\\n\
     <h2>Template</h2>\\n\
-    <textarea id=\"input\" value=\"{{input}}\" spellcheck=\"false\" autocorrect=\"off\" autocapitalize=\"off\"></textarea>\\n\
+    <textarea wrap=\"off\" id=\"input\" value=\"{{input}}\" spellcheck=\"false\" autocorrect=\"off\" autocapitalize=\"off\"></textarea>\\n\
   </div>\\n\
   <div class=\"panel\">\\n\
     <h2>Options</h2>\\n\
-    <textarea id=\"data\" value=\"{{data}}\" spellcheck=\"false\" autocorrect=\"off\" autocapitalize=\"off\"></textarea>\\n\
+    <textarea wrap=\"off\" id=\"data\" value=\"{{data}}\" spellcheck=\"false\" autocorrect=\"off\" autocapitalize=\"off\"></textarea>\\n\
   </div>\\n\
   <div class=\"panel\">\\n\
     <h2>Helpers</h2>\\n\
-    <textarea id=\"helpers\" value=\"{{helpers}}\" spellcheck=\"false\" autocorrect=\"off\" autocapitalize=\"off\"></textarea>\\n\
+    <textarea wrap=\"off\" id=\"helpers\" value=\"{{helpers}}\" spellcheck=\"false\" autocorrect=\"off\" autocapitalize=\"off\"></textarea>\\n\
   </div>\\n\
 </div>\\n\
 <div class=\"bottom\">\\n\
