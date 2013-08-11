@@ -59,6 +59,11 @@ module.exports = function(defaultDemo) {
 
       var render = jsont(input, {});
 
+      render.use('log', function(input, cb) {
+        log(this.path + '[' + this.title + ']', JSON.stringify(input));
+        cb(null, input);
+      });
+
       var opts = JSON.parse(data);
 
       var start = Date.now();

@@ -823,7 +823,9 @@ exports.map = function(input, concurrency, done) {\n\
 \n\
   each(input, function(value, key) {\n\
     batch.push(function(next) {\n\
-      stack.call(self, substack.slice(0), value, function(err, value) {\n\
+      var ctx = {stack: substack};\n\
+      ctx.__proto__ = self;\n\
+      stack.call(ctx, substack.slice(0), value, function(err, value) {\n\
         if (err) return next(err);\n\
         set([key], value, obj);\n\
         next();\n\
@@ -854,7 +856,7 @@ exports.collect = function(input, done) {\n\
 };\n\
 \n\
 exports.log = function(input, done) {\n\
-  console.log(this.path, input);\n\
+  console.log(this.path + '[' + this.title + ']', input);\n\
   done(null, input);\n\
 };\n\
 \n\
@@ -1036,6 +1038,7 @@ function exec(stack, data, done) {\n\
   if (!fn) return done(null, data);\n\
 \n\
   try {\n\
+    if (fn.title !== 'log' && fn.title !== 'debug') self.title = fn.title;\n\
     fn.call(self, data, function(err, val) {\n\
       if (err) return done(err);\n\
       // TODO figure out a better way to not have a huge stack\n\
@@ -1207,7 +1210,11 @@ function exp(name, args) {\n\
 \n\
   if (!val) {\n\
     var _get = get(name);\n\
-    return function(data, next) {\n\
+\n\
+    getVal.title = name;\n\
+    return getVal;\n\
+\n\
+    function getVal(data, next) {\n\
       next(null, _get(data));\n\
     };\n\
   }\n\
@@ -10774,6 +10781,11 @@ module.exports = function(defaultDemo) {\n\
       if (!data) return;\n\
 \n\
       var render = jsont(input, {});\n\
+\n\
+      render.use('log', function(input, cb) {\n\
+        log(this.path + '[' + this.title + ']', JSON.stringify(input));\n\
+        cb(null, input);\n\
+      });\n\
 \n\
       var opts = JSON.parse(data);\n\
 \n\
