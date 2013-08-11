@@ -1,0 +1,6 @@
+{
+  "coders": "`users | map | pre | pre | is-allowed-to:code | pre | pre | pre | reduce | post | post | post | post | filter-falsy`",
+  "analyze": "`users | map | is-allowed-to:analyze | pre | pre | pre | reduce | post | post | filter-falsy`",
+  "other": "`users | map | is-allowed-to:other | reduce | filter-falsy`",
+  "admin": "`users | map | is-allowed-to:admin-task | reduce`"
+}
