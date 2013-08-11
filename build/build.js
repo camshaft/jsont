@@ -813,12 +813,12 @@ exports.map = function(input, concurrency, done) {\n\
 \n\
   if (concurrency) batch.concurrency(concurrency);\n\
 \n\
-  var collect = indexOf(self.stack, function(helper) {\n\
-    if (helper.title == 'collect') return true;\n\
+  var reduce = indexOf(self.stack, function(helper) {\n\
+    if (helper.title === 'reduce' || helper.title === 'collect') return true;\n\
   });\n\
 \n\
-  var substack = ~collect\n\
-    ? self.stack.slice(0, collect)\n\
+  var substack = ~reduce\n\
+    ? self.stack.slice(0, reduce)\n\
     : self.stack;\n\
 \n\
   each(input, function(value, key) {\n\
@@ -834,10 +834,10 @@ exports.map = function(input, concurrency, done) {\n\
   batch.end(function(err) {\n\
     if (err) return done(err);\n\
 \n\
-    // We're collecting the results\n\
-    if (~collect) {\n\
+    // We're reduceing the results\n\
+    if (~reduce) {\n\
       // Discard the stack that we've already executed\n\
-      shift(self.stack, collect);\n\
+      shift(self.stack, reduce);\n\
       return done(null, obj);\n\
     };\n\
 \n\
@@ -848,7 +848,13 @@ exports.map = function(input, concurrency, done) {\n\
   });\n\
 };\n\
 \n\
+exports.reduce =\n\
 exports.collect = function(input, done) {\n\
+  done(null, input);\n\
+};\n\
+\n\
+exports.log = function(input, done) {\n\
+  console.log(this.path, input);\n\
   done(null, input);\n\
 };\n\
 \n\
@@ -10725,7 +10731,7 @@ module.exports = function(defaultDemo) {\n\
         {id: 'github-api', name: 'GitHub API'},\n\
         {id: 'project', name: 'GitHub Project Pages'},\n\
         {id: 'is-allowed', name: 'Is Allowed', message: 'See what happens when you change the username to Scott'},\n\
-        {id: 'collect', name: 'Map->Collect'},\n\
+        {id: 'reduce', name: 'Map->Reduce'},\n\
         {id: 'triangular', name: 'Triangular Numbers', message: 'Here we can compute the triangular numbers from 1 - N'}\n\
       ],\n\
       demo: getHash(defaultDemo)\n\
@@ -10830,48 +10836,6 @@ require.register("jsont-demo/template.js", Function("exports, require, module",
   {{/error}}\\n\
 </div>\\n\
 ';//@ sourceURL=jsont-demo/template.js"
-));
-require.register("jsont-demo/collect-helpers.js", Function("exports, require, module",
-"module.exports = function (jsont) {\n\
-  var users = {\n\
-    \"1\": {\n\
-      name: \"Cameron\",\n\
-      followers: 100\n\
-    },\n\
-    \"2\": {\n\
-      name: \"Scott\",\n\
-      followers: 4\n\
-    },\n\
-    \"3\": {\n\
-      name: \"Dave\",\n\
-      followers: 50\n\
-    }\n\
-  }\n\
-\n\
-  jsont.use('user', function(id, cb) {\n\
-    cb(null, users[id]);\n\
-  });\n\
-\n\
-  jsont.use('filter-unpopular', function(users, cb) {\n\
-    cb(null, users.filter(function(user) {\n\
-      return user.followers > 49;\n\
-    }));\n\
-  });\n\
-}//@ sourceURL=jsont-demo/collect-helpers.js"
-));
-require.register("jsont-demo/collect-options.js", Function("exports, require, module",
-"module.exports = {\n\
-  \"users\": [\n\
-    \"1\",\n\
-    \"2\",\n\
-    \"3\"\n\
-  ]\n\
-}//@ sourceURL=jsont-demo/collect-options.js"
-));
-require.register("jsont-demo/collect-template.js", Function("exports, require, module",
-"module.exports = {\n\
-  \"popular-people\": \"`users | map | user | collect | filter-unpopular`\"\n\
-}//@ sourceURL=jsont-demo/collect-template.js"
 ));
 require.register("jsont-demo/default-helpers.js", Function("exports, require, module",
 "module.exports = function (jsont) {\n\
@@ -11009,6 +10973,48 @@ require.register("jsont-demo/project-template.js", Function("exports, require, m
 "module.exports = {\n\
   \"starred-projects\": \"`projects | map | github-project`\"\n\
 }//@ sourceURL=jsont-demo/project-template.js"
+));
+require.register("jsont-demo/reduce-helpers.js", Function("exports, require, module",
+"module.exports = function (jsont) {\n\
+  var users = {\n\
+    \"1\": {\n\
+      name: \"Cameron\",\n\
+      followers: 100\n\
+    },\n\
+    \"2\": {\n\
+      name: \"Scott\",\n\
+      followers: 4\n\
+    },\n\
+    \"3\": {\n\
+      name: \"Dave\",\n\
+      followers: 50\n\
+    }\n\
+  }\n\
+\n\
+  jsont.use('user', function(id, cb) {\n\
+    cb(null, users[id]);\n\
+  });\n\
+\n\
+  jsont.use('filter-unpopular', function(users, cb) {\n\
+    cb(null, users.filter(function(user) {\n\
+      return user.followers > 49;\n\
+    }));\n\
+  });\n\
+}//@ sourceURL=jsont-demo/reduce-helpers.js"
+));
+require.register("jsont-demo/reduce-options.js", Function("exports, require, module",
+"module.exports = {\n\
+  \"users\": [\n\
+    \"1\",\n\
+    \"2\",\n\
+    \"3\"\n\
+  ]\n\
+}//@ sourceURL=jsont-demo/reduce-options.js"
+));
+require.register("jsont-demo/reduce-template.js", Function("exports, require, module",
+"module.exports = {\n\
+  \"popular-people\": \"`users | map | user | reduce | filter-unpopular`\"\n\
+}//@ sourceURL=jsont-demo/reduce-template.js"
 ));
 require.register("jsont-demo/triangular-helpers.js", Function("exports, require, module",
 "module.exports = function (jsont) {\n\

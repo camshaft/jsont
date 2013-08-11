@@ -15,9 +15,6 @@
   "scripts": [
     "index.js",
     "template.js",
-    "collect-helpers.js",
-    "collect-options.js",
-    "collect-template.js",
     "default-helpers.js",
     "default-options.js",
     "default-template.js",
@@ -30,6 +27,9 @@
     "project-helpers.js",
     "project-options.js",
     "project-template.js",
+    "reduce-helpers.js",
+    "reduce-options.js",
+    "reduce-template.js",
     "triangular-helpers.js",
     "triangular-options.js",
     "triangular-template.js"
